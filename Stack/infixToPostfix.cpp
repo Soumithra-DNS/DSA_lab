@@ -1,11 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-
-int precedence(char ope) {
-    if (ope == '+' || ope == '-') return 1;
-    if (ope == '*' || ope == '/') return 2;
-    if (ope == '^') return 3; // Higher precedence for exponentiation
+int precedence(char ope){
+    if(ope == '+' || ope == '-') return 1;
+    if(ope == '*' || ope == '/') return 2;
+    if(ope == '^') return 3;
     return 0;
 }
 
@@ -24,15 +23,20 @@ string infixToPostfix(string infix){
             }
             ope.pop();
         }else{
+            while(!ope.empty() && (precedence(ope.top()) >= precedence(infix[i]))){
+                postfix += ope.top();
+                ope.pop();
+            }
             ope.push(infix[i]);
         }
     }
-    while(!ope.empty()){
-        postfix += ope.top();
-        ope.pop();
+    while(!ope.empty() ){
+                postfix += ope.top();
+                ope.pop();
     }
     return postfix;
 }
+
 
 int main() {
     string str = "(A+2)*(3^B)";
